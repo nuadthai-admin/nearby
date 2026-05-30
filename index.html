@@ -1,11 +1,93 @@
 <!DOCTYPE html>
 <html>
-   <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-      <base target="_top">
-   </head>
-   <body>
-      <iframe style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;border: 0;
-" src="https://script.google.com/macros/s/AKfycbyR_rGviIX53e2f59qstKaJUSBl-EjkSgraI1bZF8AlQgmcPJ8yLVxLFCTJ7D8bjRm7Cw/exec"</iframe>
-   </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Login Demo</title>
+</head>
+
+<body>
+
+<h2>Login with Google</h2>
+
+<button id="loginBtn">
+  Login with Google
+</button>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD9I15QhqPsl-8ybMyrFaGcP4u1HkdcKF4",
+  authDomain: "member-nuadthai.firebaseapp.com",
+  projectId: "member-nuadthai",
+  appId: "1:1009776261711:web:28ff1ea8ae86ed50e9483a"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const provider = new GoogleAuthProvider();
+
+const GAS_URL =
+"https://script.google.com/macros/s/AKfycbyR_rGviIX53e2f59qstKaJUSBl-EjkSgraI1bZF8AlQgmcPJ8yLVxLFCTJ7D8bjRm7Cw/exec";
+
+document
+.getElementById("loginBtn")
+.addEventListener("click", async () => {
+
+  try {
+
+    const result =
+      await signInWithPopup(
+        auth,
+        provider
+      );
+
+    const user = result.user;
+
+    const url =
+      GAS_URL +
+      "?name=" +
+      encodeURIComponent(
+        user.displayName
+      ) +
+      "&email=" +
+      encodeURIComponent(
+        user.email
+      ) +
+      "&uid=" +
+      encodeURIComponent(
+        user.uid
+      );
+
+    // ทดสอบเรียก GAS โดยเปิด URL ตรง
+    window.location.href = url;
+
+  }
+  catch(error) {
+
+    console.error(error);
+
+    alert(
+      "Error : " +
+      error.message
+    );
+
+  }
+
+});
+
+</script>
+
+</body>
 </html>
