@@ -13,6 +13,8 @@
   Login with Google
 </button>
 
+<div id="status"></div>
+
 <script type="module">
 
 import { initializeApp }
@@ -38,8 +40,7 @@ const auth = getAuth(app);
 
 const provider = new GoogleAuthProvider();
 
-const GAS_URL =
-"https://script.google.com/macros/s/AKfycbyR_rGviIX53e2f59qstKaJUSBl-EjkSgraI1bZF8AlQgmcPJ8yLVxLFCTJ7D8bjRm7Cw/exec";
+
 
 document
 .getElementById("loginBtn")
@@ -55,23 +56,25 @@ document
 
     const user = result.user;
 
-    const url =
-      GAS_URL +
-      "?name=" +
-      encodeURIComponent(
-        user.displayName
-      ) +
-      "&email=" +
-      encodeURIComponent(
-        user.email
-      ) +
-      "&uid=" +
-      encodeURIComponent(
-        user.uid
-      );
+    const name = user.displayName;
+	const email = user.email;
+	const uid = user.uid;
+     
+     var url = 'https://script.google.com/macros/s/AKfycbyR_rGviIX53e2f59qstKaJUSBl-EjkSgraI1bZF8AlQgmcPJ8yLVxLFCTJ7D8bjRm7Cw/exec?name=' + encodeURIComponent(name)+ '&email=' + encodeURIComponent(email)+ '&uid=' + encodeURIComponent(uid);
+            
+     fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            document.getElementById('status').innerHTML = "บันทึกข้อมูลสำเร็จ";
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            document.getElementById('status').innerHTML = "เกิดข้อผิดพลาดในการบันทึกข้อมูล";
+        });
 
     // ทดสอบเรียก GAS โดยเปิด URL ตรง
-    window.location.href = url;
+    window.location.href = "https://www.youtube.com/";
 
   }
   catch(error) {
@@ -87,6 +90,23 @@ document
 
 });
 
+function sendDataToGoogleSheet() {
+     var name = document.getElementById("userName").value;
+     var stuId = document.getElementById("uid").value;
+     var url = 'https://script.google.com/macros/s/AKfycbwTSfGlHVyyEidU5ERga4rJWLBJKDLVSg96cLFU_W68GsqOiFW7xCITBXqzGEo2XiEz/exec?name=' + encodeURIComponent(name)+ '&stuId=' + encodeURIComponent(stuId);
+            
+     fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            document.getElementById('status').innerHTML = "บันทึกข้อมูลสำเร็จ";
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            document.getElementById('status').innerHTML = "เกิดข้อผิดพลาดในการบันทึกข้อมูล";
+        });
+     
+        }
 </script>
 
 </body>
