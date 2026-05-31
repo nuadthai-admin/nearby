@@ -3,17 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Login Demo</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 </head>
 
 <body>
-
+<div id = "loginPage">
 <h2>Login with Google</h2>
 
 <button id="loginBtn">
   Login with Google
 </button>
-
+</div>
 <div id="status"></div>
+<div class="mb-4" style = "display: none;">
+                <label for="userName" class="block text-gray-700 font-bold mb-2">ยินดีต้อนรับคุณ:</label>
+                <input type="text" id="userName" name="userName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly>
+</div>
 
 <script type="module">
 
@@ -67,6 +73,9 @@ document
         .then(data => {
             console.log('Success:', data);
             document.getElementById('status').innerHTML = "บันทึกข้อมูลสำเร็จ";
+			document.getElementById('userName').value = name;
+			document.getElementById("userName").style.display = "block"
+			document.getElementById("loginPage").style.display = "none"
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -90,23 +99,6 @@ document
 
 });
 
-function sendDataToGoogleSheet() {
-     var name = document.getElementById("userName").value;
-     var stuId = document.getElementById("uid").value;
-     var url = 'https://script.google.com/macros/s/AKfycbwTSfGlHVyyEidU5ERga4rJWLBJKDLVSg96cLFU_W68GsqOiFW7xCITBXqzGEo2XiEz/exec?name=' + encodeURIComponent(name)+ '&stuId=' + encodeURIComponent(stuId);
-            
-     fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            document.getElementById('status').innerHTML = "บันทึกข้อมูลสำเร็จ";
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            document.getElementById('status').innerHTML = "เกิดข้อผิดพลาดในการบันทึกข้อมูล";
-        });
-     
-        }
 </script>
 
 </body>
