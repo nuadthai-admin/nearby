@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Login Demo</title>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+	
 </head>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <body>
-<form id = "loginPage" style = "display: block;">
+<div id = "loginPage" style = "display: block;">
 <h2>Login with Google</h2>
 
 <button id="loginBtn">
   Login with Google
 </button>
-</form>
+</div>
 <div id="status"></div>
 <div class="mb-4" id = "welcome" style = "display: none;">
                 <label for="userName" class="block text-gray-700 font-bold mb-2">ยินดีต้อนรับคุณ:</label>
@@ -74,8 +74,8 @@ document
             console.log('Success:', data);
             document.getElementById('status').innerHTML = "บันทึกข้อมูลสำเร็จ";
 			document.getElementById('userName').value = name;
-			document.getElementById("welcome").style.display = "block"
-			document.getElementById("loginPage").style.display = "none"
+			document.getElementById("welcome").style.display = "block";
+			document.getElementById("loginPage").style.display = "none";
         })
         .catch((error) => {
             console.error('Error:', error);
